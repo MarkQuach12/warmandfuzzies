@@ -18,7 +18,6 @@ def add_message():
 @message_routes.route('/get_messages/<user_id>', methods=['GET'])
 def get_messages(user_id):
     messages = []
-    
     return jsonify({
         "messages": messages
     }), 200

@@ -22,7 +22,12 @@ def create_group():
 @group_routes.route('/get_group/<unique_key>', methods=['POST'])
 def get_group(unique_key):
     group = []
-    
     return jsonify({
         "group": group
+    }), 200
+
+@group_routes.route('/delete_group/<unique_key>', methods=['DELETE'])
+def delete_group(unique_key):
+    return jsonify({
+        "message": "Group deleted successfully"
     }), 200
