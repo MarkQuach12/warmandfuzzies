@@ -1,0 +1,5 @@
+# Firebase private key
+firebase/firebase-key.json
+
+# Env vars
+.env

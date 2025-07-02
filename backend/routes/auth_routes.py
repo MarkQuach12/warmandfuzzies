@@ -18,3 +18,27 @@ def signup():
 @auth_routes.route('/login', methods=['POST'])
 def login():
     return jsonify({}), 200
+
+@auth_routes.route('/logout', methods=['POST'])
+def logout():
+    return jsonify({}), 200
+
+@auth_routes.route('/profile/<user_id>', methods=['GET'])
+def get_user(user_id):
+    return jsonify({
+        "user_id": user_id,
+        "username": "",
+        "received_messages": [],
+        "sent_messages": [],
+        "is_public": True
+    }), 200
+
+@auth_routes.route('/update_profile/<user_id>', methods=['PUT'])
+def update_profile(user_id):
+    return jsonify({
+        "user_id": user_id,
+        "username": "",
+        "received_messages": [],
+        "sent_messages": [],
+        "is_public": True
+    }), 200

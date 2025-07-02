@@ -19,7 +19,7 @@ def create_group():
         "group": group
     }), 200
 
-@group_routes.route('/get_group/<unique_key>', methods=['POST'])
+@group_routes.route('/get_group/<unique_key>', methods=['GET'])
 def get_group(unique_key):
     group = []
     return jsonify({

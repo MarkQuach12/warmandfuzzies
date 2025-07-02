@@ -5,7 +5,7 @@ from datetime import datetime, date
 
 message_routes = Blueprint('message_routes', __name__)
 
-@message_routes.route('/add_message', methods=['GET'])
+@message_routes.route('/add_message', methods=['POST'])
 def add_message():
     return jsonify({
         "message_id": str(uuid.uuid4()),
