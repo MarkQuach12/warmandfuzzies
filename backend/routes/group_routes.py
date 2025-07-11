@@ -1,23 +1,17 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-import uuid
 from datetime import datetime, date
+from services.group_service import create_group_service
 
 group_routes = Blueprint('group_routes', __name__)
 
 @group_routes.route('/create_group', methods=['POST'])
 def create_group():
-    group = {
-        "id": 0,
-        "name": "",
-        "unique_key": 0,
-        "users": []
-    }
-
+    group_data = request.json
+    group_id = create_group_service(group_data)
     return jsonify({
-        "message": "Group created successfully",
-        "group": group
-    }), 200
+        "group_id": group_id
+    }), 201
 
 @group_routes.route('/get_group/<unique_key>', methods=['GET'])
 def get_group(unique_key):
