@@ -1,0 +1,12 @@
+# Firebase private key
+firebase/firebase-key.json
+
+# Env vars
+.env
+
+# venv
+venv/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
