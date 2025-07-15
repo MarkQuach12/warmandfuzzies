@@ -12,12 +12,13 @@ def get_group_by_key(group_id):
     print(doc_ref)
     if doc_ref:
         return doc_ref.to_dict()
-    return None
+    return {"error": "Group not found"}, 404
 
 def update_group(group_id, group_data):
     doc_ref = db.collection("groups").document(group_id)
     doc_ref.update(group_data)
 
-def delete_group_by_key(unique_key):
-    # TODO: Implement delete group by unique key
-    return {}
+def delete_group_by_key(group_id):
+    doc_ref = db.collection("groups").document(group_id)
+    doc_ref.delete()
+    return {"message": "Group deleted successfully"}

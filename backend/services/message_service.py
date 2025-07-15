@@ -1,5 +1,6 @@
 from models.message_model import create_message, get_messages_by_user
 from datetime import datetime
+from utils.uuid_utils import is_valid_uuid
 
 def add_message_service(data):
     # Missing fields: user_id, content, is_anon
@@ -25,6 +26,20 @@ def add_message_service(data):
 
     return create_message(message_data)
 
-def get_messages_service(user_id):
-    # TODO: Implement get messages logic
-    return []
+def get_messages_service(group_id, user_id, message_type):
+    if not user_id:
+        return {"error": "user_id is required"}, 400
+
+    if not group_id:
+        return {"error": "group_id is required"}, 400
+
+    if message_type not in ["sent", "received"]:
+        return {"error": "message_type is invalid"}, 400
+
+    if not group_id.isalnum():
+        return {"error": "group_id is invalid"}, 400
+
+    if not is_valid_uuid(user_id):
+        return {"error": "user_id is invalid"}, 400
+
+    return get_messages_by_user(group_id, user_id, message_type)

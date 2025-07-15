@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, date
-from services.group_service import create_group_service
+from services.group_service import create_group_service, get_group_service, delete_group_service
 
 group_routes = Blueprint('group_routes', __name__)
 
@@ -13,15 +13,23 @@ def create_group():
         "group_id": group_id
     }), 201
 
-@group_routes.route('/get_group/<unique_key>', methods=['GET'])
-def get_group(unique_key):
-    group = []
+@group_routes.route('/get_group/<group_id>', methods=['GET'])
+def get_group(group_id):
+    group = get_group_service(group_id)
     return jsonify({
         "group": group
     }), 200
 
-@group_routes.route('/delete_group/<unique_key>', methods=['DELETE'])
-def delete_group(unique_key):
+@group_routes.route('/delete_group/<group_id>', methods=['DELETE'])
+def delete_group(group_id):
+    confirm = request.args.get('confirm')
+
+    if confirm != "true":
+        return jsonify({
+            "error": "Confirmation is required"
+        }), 400
+
+    delete_group_service(group_id)
     return jsonify({
         "message": "Group deleted successfully"
     }), 200
