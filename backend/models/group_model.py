@@ -12,7 +12,7 @@ def get_group_by_key(group_id):
     print(doc_ref)
     if doc_ref:
         return doc_ref.to_dict()
-    return {"error": "Group not found"}, 404
+    return None
 
 def update_group(group_id, group_data):
     doc_ref = db.collection("groups").document(group_id)

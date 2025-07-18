@@ -1,7 +1,8 @@
+from tokenize import group
 from models.user_model import create_user, get_user_by_id, update_user
+from models.group_model import get_group_by_key
 from datetime import datetime
 import uuid
-# Service layer for authentication-related business logic
 
 def signup_service(data):
     if "name" not in data:
@@ -36,10 +37,19 @@ def logout_service(data):
     # TODO: Implement logout logic
     return {}
 
-def get_user_service(user_id):
-    # TODO: Implement get user logic
-    return {}
+def get_user_service(group_id, user_id):
+    group = get_group_by_key(group_id)
+    if not group:
+        return {"error": "group not found"}, 404
+    user = get_user_by_id(group, user_id)
+    return user
 
-def update_profile_service(user_id, data):
-    # TODO: Implement update profile logic
-    return {}
+def update_profile_service(updated_user_data):
+    if "user_id" not in updated_user_data:
+        return {"error": "user_id is required"}, 400
+    if "group_id" not in updated_user_data:
+        return {"error": "group_id is required"}, 400
+
+    user = update_user(updated_user_data["user_id"], updated_user_data)
+
+    return user

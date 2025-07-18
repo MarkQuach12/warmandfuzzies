@@ -3,7 +3,6 @@ from datetime import datetime
 from utils.uuid_utils import is_valid_uuid
 
 def add_message_service(data):
-    # Missing fields: user_id, content, is_anon
     if "receiver_user_id" not in data:
         return {"error": "receiver_user_id is required"}, 400
     if "sender_user_id" not in data:
