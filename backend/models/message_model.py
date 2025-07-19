@@ -31,6 +31,20 @@ def create_message(message_data):
 
     return {"message": "message created successfully"}
 
-def get_messages_by_user(user_id):
-    # TODO: Implement get messages for a user
-    return [] 
+def get_messages_by_user(group_id, user_id, message_type):
+    group = get_group_by_key(group_id)
+
+    if not group:
+        return {"error": "group not found"}, 404
+
+    user = get_user_by_id(group, user_id)
+
+    if not user:
+        return {"error": "user not found"}, 404
+
+    if message_type == "sent":
+        return user["sent_messages"]
+    elif message_type == "received":
+        return user["received_messages"]
+    else:
+        return {"error": "message_type is invalid"}, 400

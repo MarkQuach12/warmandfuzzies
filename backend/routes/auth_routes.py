@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 import uuid
-from services.auth_service import signup_service
+from services.auth_service import signup_service, get_user_service, update_profile_service
 
 auth_routes = Blueprint('auth_routes', __name__)
 
@@ -21,22 +21,18 @@ def login():
 def logout():
     return jsonify({}), 200
 
-@auth_routes.route('/profile/<user_id>', methods=['GET'])
-def get_user(user_id):
+@auth_routes.route('/profile/<group_id>/<user_id>', methods=['GET'])
+def get_user(group_id, user_id):
+    user = get_user_service(group_id, user_id)
     return jsonify({
-        "user_id": user_id,
-        "username": "",
-        "received_messages": [],
-        "sent_messages": [],
-        "is_public": True
+        "user": user
     }), 200
 
-@auth_routes.route('/update_profile/<user_id>', methods=['PUT'])
-def update_profile(user_id):
+@auth_routes.route('/update_profile', methods=['PUT'])
+def update_profile():
+    updated_user_data = request.json
+    user = update_profile_service(updated_user_data)
+
     return jsonify({
-        "user_id": user_id,
-        "username": "",
-        "received_messages": [],
-        "sent_messages": [],
-        "is_public": True
+        "user": user
     }), 200
